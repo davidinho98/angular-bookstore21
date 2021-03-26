@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Book, Author, Image } from '../shared/book';
 
 @Component({
@@ -9,7 +9,13 @@ export class BookListComponent implements OnInit {
 
   books: Book[];
 
+  @Output() showDetailsEvent = new EventEmitter<Book>();
+
   constructor() {}
+
+  showDetails(book:Book){
+    this.showDetailsEvent.emit(book);
+  }
 
   ngOnInit() {
     this.books = [
