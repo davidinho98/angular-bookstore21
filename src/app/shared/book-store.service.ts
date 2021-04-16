@@ -49,4 +49,12 @@ private errorHandler(error: Error | any){
   return throwError(error);
   }
 
+//*optional
+check(isbn: string): Observable<Boolean> {
+  return this.http.get<Boolean>(`${this.api}/books/checkisbn/${isbn}`)
+  .pipe(retry(3))
+  .pipe(catchError(this.errorHandler));
+}
+
+
 }
