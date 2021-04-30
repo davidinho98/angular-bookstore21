@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { LOCALE_ID, NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { ReactiveFormsModule } from "@angular/forms";
 
@@ -18,14 +18,18 @@ import { LoginComponent } from './login/login.component';
 import { AuthenticationService } from './shared/authentication.service';
 import { TokenInterceptorService } from "./shared/token-interceptor.service";
 import { JwtInterceptorService } from "./shared/jwt.interceptor.service";
+import { registerLocaleData } from "@angular/common";
+import localDE from '@angular/common/locales/de';
+import { IsbnPipe } from './shared/isbn.pipe';
 
+registerLocaleData(localDE);
 
 @NgModule({
   imports: [BrowserModule, ReactiveFormsModule,AppRoutingModule, HttpClientModule,
     BrowserAnimationsModule, // required animations module
     ToastrModule.forRoot() // ToastrModule added
   ],
-  declarations: [AppComponent, BookListComponent, BookListItemComponent, BookDetailsComponent, HomeComponent, SearchComponent, BookFormComponent, LoginComponent],
+  declarations: [AppComponent, BookListComponent, BookListItemComponent, BookDetailsComponent, HomeComponent, SearchComponent, BookFormComponent, LoginComponent, IsbnPipe],
   bootstrap: [AppComponent],
   providers: [BookStoreService, AuthenticationService,
   {
@@ -37,6 +41,9 @@ import { JwtInterceptorService } from "./shared/jwt.interceptor.service";
     provide: HTTP_INTERCEPTORS,
     useClass: JwtInterceptorService,
     multi: true
+  },
+  {
+    provide: LOCALE_ID, useValue: 'de'
   }
   ]
 })
